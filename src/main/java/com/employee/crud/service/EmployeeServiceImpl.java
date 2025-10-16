@@ -32,16 +32,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employeel = employeeRepository.findById(id);
         if (employeel.isPresent()) {
             Employee originalEmployee = employeel.get();
-            if (employee.getName() != null && !"".equalsIgnoreCase(employee.getName())) {
-                originalEmployee.setName(employee.getName());
+            if (employee.getName() != null && !employee.getName().isBlank()) {
+                originalEmployee.setName(employee.getName().trim());
             }
-            if (employee.getDoj() != null && !"".equalsIgnoreCase(employee.getDoj())) {
+            if (employee.getDoj() != null) {
                 originalEmployee.setDoj(employee.getDoj());
             }
-            if (employee.getSalary() != 0) {
+            if (employee.getSalary() != null) {
                 originalEmployee.setSalary(employee.getSalary());
             }
-            if (employee.getStatus() != -1) {
+            if (employee.getStatus() != null) {
                 originalEmployee.setStatus(employee.getStatus());
             }
             return employeeRepository.save(originalEmployee);
