@@ -1,24 +1,39 @@
 package com.employee.crud.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "name is required")
     private String name;
-    private String doj;
-    private int status;
-    private float salary;
+
+    @PastOrPresent(message = "date of joining cannot be in the future")
+    private LocalDate doj;
+
+    // use wrapper types so null means 'not provided' during partial updates
+    @Column(name = "status")
+    private Integer status;
+
+    @Column(name = "salary")
+    private Float salary;
 
     public Employee() {
     }
 
-    public Employee(Long id, String name, String doj, int status, float salary) {
+    public Employee(Long id, String name, LocalDate doj, Integer status, Float salary) {
         this.id = id;
         this.doj = doj;
         this.name = name;
@@ -26,7 +41,7 @@ public class Employee {
         this.status = status;
     }
 
-    public Employee(String name, String doj, int status, float salary) {
+    public Employee(String name, LocalDate doj, Integer status, Float salary) {
         this.doj = doj;
         this.name = name;
         this.salary = salary;
@@ -49,27 +64,27 @@ public class Employee {
         this.name = name;
     }
 
-    public String getDoj() {
+    public LocalDate getDoj() {
         return doj;
     }
 
-    public void setDoj(String doj) {
+    public void setDoj(LocalDate doj) {
         this.doj = doj;
     }
 
-    public float getSalary() {
+    public Float getSalary() {
         return salary;
     }
 
-    public void setSalary(float salary) {
+    public void setSalary(Float salary) {
         this.salary = salary;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
